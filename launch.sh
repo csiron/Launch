@@ -36,5 +36,5 @@ if [ ${#dbInstanceARR[@]} -gt 0 ]
      aws rds create-db-instance --db-instance-identifier csironITMO444db --db-instance-class db.t1.micro --engine MySQL --master-username root --master-user-password letmein22 --allocated-storage 5
       fi  
      done
-fi
+
 
