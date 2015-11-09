@@ -4,7 +4,7 @@ declare -a instancesARR
 
 aws rds create-db-instance --db-instance-identifier csironITMO444db --db-instance-class db.t1.micro --engine MySQL --master-username root --master-user-password letmein22 --allocated-storage 5
 
-mapfile -t instancesARR < <(aws ec2 run-instances --image-id $1 --count $2 --instance-type $3  --key-name $4 --security-group-ids $5 --subnet-id $6 --user-data file://environment/install-env.sh --associate-public-ip-address --output table | grep InstanceId | sed "s/|//g" | tr -d ' ' | sed "s/InstanceId//g")
+mapfile -t instancesARR < <(aws ec2 run-instances --image-id $1 --count $2 --instance-type $3  --key-name $4 --security-group-ids $5 --subnet-id $6 --user-data file://environment/install-env.sh --associate-public-ip-address --iam-instance-profile Name="$7" --output table | grep InstanceId | sed "s/|//g" | tr -d ' ' | sed "s/InstanceId//g")
 
 echo ${instancesARR[@]}
 
@@ -21,8 +21,7 @@ aws autoscaling create-launch-configuration --launch-configuration-name csironIT
 
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name csironITMO444autogroup --launch-configuration-name csironITMO444auto --load-balancer-names csironITMO444ELB  --health-check-type ELB --min-size 1 --max-size 3 --desired-capacity 2 --default-cooldown 600 --health-check-grace-period 120 --vpc-zone-identifier subnet-0aa7a97d
 
-aws cloudwatch put-metric-alarm --alarm-name Lower --metric-name LowUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 10 --comparison-operator LessThanOrEqualToThreshold --evaluation-periods 2 --unit Percent --insufficient-data-actions csironITMO444auto
+aws cloudwatch put-metric-alarm --alarm-name Lower --metric-name LowUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 10 --comparison-operator LessThanOrEqualToThreshold --evaluation-periods 2 --unit Percent --iam-instance-profile Name="$7"
 
-aws cloudwatch put-metric-alarm --alarm-name Raise --metric-name HighUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 30 --comparison-operator GreaterThanOrEqualToThreshold --evaluation-periods 2 --unit Percent --insufficient-data-actions csironITMO444auto
-
+aws cloudwatch put-metric-alarm --alarm-name Raise --metric-name HighUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 30 --comparison-operator GreaterThanOrEqualToThreshold --evaluation-periods 2 --unit Percent --iam-instance-profile Name="$7"
 
