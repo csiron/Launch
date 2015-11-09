@@ -21,4 +21,8 @@ aws autoscaling create-launch-configuration --launch-configuration-name csironIT
 
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name csironITMO444autogroup --launch-configuration-name csironITMO444auto --load-balancer-names csironITMO444ELB  --health-check-type ELB --min-size 1 --max-size 3 --desired-capacity 2 --default-cooldown 600 --health-check-grace-period 120 --vpc-zone-identifier subnet-0aa7a97d
 
+aws cloudwatch put-metric-alarm --alarm-name Lower --metric-name LowUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 10 --comparison-operator LessThanOrEqualToThreshold --evaluation-periods 2
+
+aws cloudwatch put-metric-alarm --alarm-name Raise --metric-name HighUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 30 --comparison-operator GreaterThanOrEqualToThreshold --evaluation-periods 2
+
 
