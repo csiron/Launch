@@ -17,7 +17,7 @@ aws elb register-instances-with-load-balancer --load-balancer-name csironITMO444
 
 aws elb configure-health-check --load-balancer-name csironITMO444ELB --health-check Target=HTTP:80/index.php,Interval=30,UnhealthyThreshold=2,HealthyThreshold=2,Timeout=3
 
-aws autoscaling create-launch-configuration --launch-configuration-name csironITMO444auto --image-id ami-d85e75b0 --key-name $4 --security-groups sg-c7c2fea0 --instance-type t1.micro --user-data file://environment/install-env.sh
+aws autoscaling create-launch-configuration --launch-configuration-name csironITMO444auto --image-id ami-d05e75b8 --key-name $4 --security-groups sg-c7c2fea0 --instance-type t2.micro --user-data file://environment/install-env.sh
 
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name csironITMO444autogroup --launch-configuration-name csironITMO444auto --load-balancer-names csironITMO444ELB  --health-check-type ELB --min-size 1 --max-size 3 --desired-capacity 2 --default-cooldown 600 --health-check-grace-period 120 --vpc-zone-identifier subnet-0aa7a97d
 
