@@ -8,7 +8,7 @@ aws sns set-topic-attributes --topic-arn $ARN --attribute-name DisplayName --att
 
 aws sns subscribe --topic-arn $ARN --protocol sms --notification-endpoint 18154822265 
 
-wait 180 #wait command added to allow time for subscriber to respond to text to confirm subscription
+sleep 180 #wait command added to allow time for subscriber to respond to text to confirm subscription
 
 aws s3 mb s3://snstest-bucket
 
