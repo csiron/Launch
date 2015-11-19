@@ -10,6 +10,6 @@ aws sns subscribe --topic-arn $ARN --protocol sms --notification-endpoint 181548
 
 wait 180 #wait command added to allow time for subscriber to respond to text to confirm subscription
 
-
+aws s3 mb s3://snstest-bucket
 
 
