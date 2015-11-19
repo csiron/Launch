@@ -1,0 +1,11 @@
+ {
+    "TopicConfigurations": [
+        {
+            "TopicArn": "$ARN",
+            "Events": [
+                "s3:ObjectCreated:*"
+            ]
+        }
+    ]
+}
+
