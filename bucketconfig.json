@@ -1,7 +1,7 @@
  {
     "TopicConfigurations": [
         {
-            "TopicArn": "$ARN",
+            "TopicArn": "arn:aws:sns:us-east-1:*:csironmp2",
             "Events": [
                 "s3:ObjectCreated:*"
             ]
