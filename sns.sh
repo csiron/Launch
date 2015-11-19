@@ -14,7 +14,7 @@ sleep 60 #wait command added to allow time for subscriber to respond to text to 
 
 aws s3 mb s3://snstest-bucket
 
-wait bucket-exists --bucket snstest-bucket
+aws s3api wait bucket-exists --bucket snstest-bucket
 
 aws s3api put-bucket-notification-configuration --bucket snstest-bucket --notification-configuration file://bucketconfig.json
 
