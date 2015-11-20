@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 
 ARN=(`aws sns create-topic --name csironmp2`)
 
@@ -13,6 +13,3 @@ aws sns add-permission --topic-arn $ARN --label S3notification --aws-account-id 
 echo "Waiting for one minute to allow the subscriber to respond to the sms text"
 
 sleep 60 #wait command added to allow time for subscriber to respond to text to confirm subscription
-#removed the bucket commands
-
-
