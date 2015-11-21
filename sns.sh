@@ -10,9 +10,9 @@ aws sns subscribe --topic-arn $ARN --protocol sms --notification-endpoint 181548
 
 aws sns add-permission --topic-arn $ARN --label S3notification --aws-account-id 919217163828 --action-name Publish
 
-echo "Waiting for one minute to allow the subscriber to respond to the sms text"
+echo "Waiting for two minutes to allow the subscriber to respond to the sms text"
 
-sleep 60 #wait command added to allow time for subscriber to respond to text to confirm subscription
-#removed the bucket commands
-
-
+sleep 120 #wait command added to allow time for subscriber to respond to text to confirm subscription
+aws s3 mb s3://cjs-sns-testbucket --region us-east-1
+aws s3api wait bucket-exists --bucket cjs-sns-testbucket
+aws s3api put-bucket-notification-configuration --bucket cjs-sns-testbucket --notification-configuration file://test.json
