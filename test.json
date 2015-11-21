@@ -1,14 +1,8 @@
 {
-    "TopicConfigurations": [
+    "TopicConfigurations": 
         {
-            "TopicArn": "arn:aws:sns:us-east-1:919217163828:csironmp2",
-            "Events": [
-                "s3:ObjectCreated:*"
-            ],
-	    "Action": [
-		"SNS:Publish
-]
-
+           "Event": "s3:ObjectCreated:*",
+	   "TopicArn": "arn:aws:sns:us-east-1:919217163828:csironmp2",
+	   "Action": "SNS:Publish
         }
-    ]
 }
