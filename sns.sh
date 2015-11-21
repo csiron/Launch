@@ -8,7 +8,7 @@ aws sns set-topic-attributes --topic-arn $ARN --attribute-name DisplayName --att
 
 aws sns subscribe --topic-arn $ARN --protocol sms --notification-endpoint 18154822265 
 
-aws sns add-permission --topic-arn $ARN --label S3notification --aws-account-id 919217163828 --action-name Publish
+aws sns-add-permission --topic-arn $ARN --label S3notification --aws-account-id 919217163828 --action-name Publish
 
 echo "Waiting for two minutes to allow the subscriber to respond to the sms text"
 
