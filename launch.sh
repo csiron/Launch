@@ -23,7 +23,28 @@ aws autoscaling create-launch-configuration --launch-configuration-name csironIT
 
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name csironITMO444autogroup --launch-configuration-name csironITMO444auto --load-balancer-names csironITMO444ELB  --health-check-type ELB --min-size 1 --max-size 3 --desired-capacity 2 --default-cooldown 600 --health-check-grace-period 120 --vpc-zone-identifier subnet-0aa7a97d
 
-#aws cloudwatch put-metric-alarm --alarm-name Lower --metric-name LowUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 10 --comparison-operator LessThanOrEqualToThreshold --evaluation-periods 2 --unit Percent --iam-instance-profile Name="$7"
+aws cloudwatch put-metric-alarm --alarm-name Lower --metric-name LowUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 10 --comparison-operator LessThanOrEqualToThreshold --evaluation-periods 2 --unit Percent 
 
-#aws cloudwatch put-metric-alarm --alarm-name Raise --metric-name HighUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 30 --comparison-operator GreaterThanOrEqualToThreshold --evaluation-periods 2 --unit Percent --iam-instance-profile Name="$7"
+aws cloudwatch put-metric-alarm --alarm-name Raise --metric-name HighUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 30 --comparison-operator GreaterThanOrEqualToThreshold --evaluation-periods 2 --unit Percent
+
+ARN=(`aws sns create-topic --name csironmp2`)
+
+echo "This is the ARN:  $ARN"
+
+aws sns set-topic-attributes --topic-arn $ARN --attribute-name DisplayName --attribute-value csironmp2
+
+aws sns subscribe --topic-arn $ARN --protocol sms --notification-endpoint 18154822265
+
+aws sns add-permission --topic-arn $ARN --label S3notification --aws-account-id $1 --action-name Publish
+
+echo "Waiting for two minutes to allow the subscriber to respond to the sms text"
+
+sleep 120 
+
+aws s3api create-bucket --bucket cjs-sns-testbucket --acl public-read --region us-east-1
+
+echo "Waiting for three minutes for bucket to be completely initialized"
+sleep 180
+
+aws s3api put-bucket-notification --bucket cjs-sns-testbucket --notification-configuration file://test.json
 
