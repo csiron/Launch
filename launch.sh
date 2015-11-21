@@ -10,7 +10,8 @@ mapfile -t instancesARR < <(aws ec2 run-instances --image-id $1 --count $2 --ins
 
 echo ${instancesARR[@]}
 
-aws ec2 wait instance-running --instance-ids ${instancesARR[@]} 
+echo "Waiting 3 minutes for instances to initialize"
+sleep 180 
 
 aws elb create-load-balancer --load-balancer-name csironITMO444ELB --listeners "Protocol=HTTP,LoadBalancerPort=80,InstanceProtocol=HTTP,InstancePort=80" --subnets subnet-0aa7a97d --security-groups sg-c7c2fea0
 
