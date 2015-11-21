@@ -16,7 +16,6 @@ sleep 120 #wait command added to allow time for subscriber to respond to text to
 
 aws s3api create-bucket --bucket cjs-sns-testbucket --acl public-read --region us-east-1
 
-echo "Waiting one minute to wait for the bucket to be created"
-sleep 60
+aws s3api wait bucket-exists --bucket cjs-sns-testbucket
 
 aws s3api put-bucket-notification --bucket cjs-sns-testbucket --notification-configuration file://test.json
