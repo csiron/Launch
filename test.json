@@ -5,7 +5,7 @@
             "Events": [
                 "s3:ObjectCreated:*"
             ]
-	    "Action":[
+	    "Action": [
 		"SNS:Publish
 ]
 
