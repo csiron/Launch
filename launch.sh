@@ -17,8 +17,9 @@ aws elb create-load-balancer --load-balancer-name csironITMO444ELB --listeners "
 
 aws elb register-instances-with-load-balancer --load-balancer-name csironITMO444ELB --instances ${instancesARR[@]}
 
-
 aws elb configure-health-check --load-balancer-name csironITMO444ELB --health-check Target=HTTP:80/index.php,Interval=30,UnhealthyThreshold=2,HealthyThreshold=2,Timeout=3
+
+aws elb create-lb-cookie-stickiness-policy --load-balancer-name csironITMO444ELB --policy-name cjsstickinesspolicy --cookie-expiration-period 300
 
 aws autoscaling create-launch-configuration --launch-configuration-name csironITMO444auto --image-id ami-d05e75b8 --key-name $4 --security-groups sg-c7c2fea0 --instance-type t2.micro #--user-data file://environment/install-env.sh
 
