@@ -28,13 +28,3 @@ aws autoscaling create-auto-scaling-group --auto-scaling-group-name csironITMO44
 aws cloudwatch put-metric-alarm --alarm-name Lower --metric-name LowUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 10 --comparison-operator LessThanOrEqualToThreshold --evaluation-periods 2 --unit Percent 
 
 aws cloudwatch put-metric-alarm --alarm-name Raise --metric-name HighUsage --namespace AWS/EC2 --statistic Average --period 120 --threshold 30 --comparison-operator GreaterThanOrEqualToThreshold --evaluation-periods 2 --unit Percent
-
-ARN=(`aws sns create-topic --name csironmp2`)
-
-echo "This is the ARN:  $ARN"
-
-aws sns set-topic-attributes --topic-arn $ARN --attribute-name DisplayName --attribute-value csironmp2
-
-aws sns subscribe --topic-arn $ARN --protocol sms --notification-endpoint $7
-
-aws sns add-permission --topic-arn $ARN --label S3notification --aws-account-id $8 --action-name Publish
