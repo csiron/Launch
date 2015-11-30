@@ -6,7 +6,7 @@ sudo aws rds create-db-subnet-group --db-subnet-group-name cjsdbsubnet --db-subn
 
 aws rds create-db-instance --db-instance-identifier csironITMO444db --db-instance-class db.t1.micro --engine MySQL --master-username root --master-user-password letmein22 --allocated-storage 5 --db-subnet-group-name cjsdbsubnet --publicly-accessible
 
-mapfile -t instancesARR < <(aws ec2 run-instances --image-id $1 --count $2 --instance-type $3  --key-name $4 --security-group-ids $5 --subnet-id $6 --user-data file://environment/install-env.sh --associate-public-ip-address --output table | grep InstanceId | sed "s/|//g" | tr -d ' ' | sed "s/InstanceId//g")
+mapfile -t instancesARR < <(aws ec2 run-instances --image-id $1 --count $2 --instance-type $3  --key-name $4 --security-group-ids $5 --subnet-id $6 --user-data file://environment/install-env.sh --iam-instance-profile $7 --associate-public-ip-address --output table | grep InstanceId | sed "s/|//g" | tr -d ' ' | sed "s/InstanceId//g")
 
 echo ${instancesARR[@]}
 
