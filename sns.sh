@@ -1,9 +1,6 @@
-#!/usr/local/bin/bash
+!/bin/bash
 
-ARN=(`aws sns create-topic --name cjsmp2`)
+aws sns subscribe --topic-arn arn:aws:sns:us-east-1:$2:cjsmp2 --protocol sms --notification-endpoint $1 
 
-echo "this is arn: $ARN"
+aws sns add-permission --topic-arn arn:aws:sns:us-east-1:$2:cjsmp2 --label S3notification --aws-account-id $2 --action-name Publish
 
-aws sns set-topic-attributes --topic-arn $ARN --attribute-name DisplayName --attribute-value mp2
-
-aws sns subscribe --topic-arn $ARN --protocol email --notification-endpoint csiron@hawk.iit.edu
