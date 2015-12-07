@@ -68,6 +68,8 @@ sleep 5
 
 fi
 
-aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:919217163828:cjsmp2
+#The $1 is the aws account number
+
+aws sns delete-topic --topic-arn arn:aws:sns:us-east-1:$1:cjsmp2
 
 echo "Hopefully everything is deleted"
